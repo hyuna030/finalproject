@@ -1,0 +1,21 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/HeirofLightBold.ttf",
+      "sha1": "3f3c97a6069c8feea73f6350c92a42f7b55fa1f1"
+    },
+    {
+      "path": "assets/fonts/NotoSansKR-Bold.ttf",
+      "sha1": "ef48946255ea40691bfccc5c20c13c8fe97f908c"
+    },
+    {
+      "path": "assets/fonts/NotoSansKR-Regular.ttf",
+      "sha1": "83d3c03dc1fc16f2a5b8bbf929d4cc21a078282c"
+    },
+    {
+      "path": "assets/fonts/NotoSansKR_wght.ttf",
+      "sha1": "da8ef76ac01bec36758996a4a35ce4ff32fd119c"
+    }
+  ]
+}

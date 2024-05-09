@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "187765610474",
+    "project_id": "finalflowe",
+    "storage_bucket": "finalflowe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:187765610474:android:d2149068dc88d22e0cc493",
+        "android_client_info": {
+          "package_name": "com.finalpj"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWP1xee_cVIZ8A6KE94qgiPOAd0dKMNK8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
