@@ -32,14 +32,11 @@ const imageLoaderConfiguration = {
 };
 
 module.exports = {
-  entry: [
-    path.resolve(appDirectory, 'index.web.js')
-  ],
+  entry: './index.web.js',
   output: {
-    filename: 'bundle.web.js',
-    path: path.resolve(appDirectory, 'dist'),
-    publicPath: '/',
-},
+    path: path.resolve(__dirname, 'dist'), // 결과물을 dist 폴더에 저장
+    filename: 'bundle.js' // 결과물 파일 이름
+  },
 externals: {
     'react-native-webview': 'commonjs react-native-webview'
   },
