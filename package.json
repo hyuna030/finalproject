@@ -13,7 +13,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "build-react": "webpack --mode production",
+    "build-react": "webpack --config ./web/webpack.config.js --mode production",
     "start-react": "webpack serve --config ./web/webpack.config.js --mode development"
   },
   "dependencies": {
