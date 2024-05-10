@@ -160,7 +160,7 @@ function GrowPlantScreen({ navigation }) {
 
         try {
           // 서버로부터 식물 MBTI 가져오기
-          const mbtiResponse = await fetch('http://localhost:3001/generate-plant-mbti', {
+          const mbtiResponse = await fetch('https://mybackend-eta.vercel.app/generate-plant-mbti', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -672,7 +672,7 @@ function GrowPlantScreen({ navigation }) {
         imageUrls = await Promise.all(images.map(file => uploadImageAndGetURL(file)));
         const firstImageUrl = imageUrls[0];
 
-        const analysisResponse = await fetch('http://localhost:3001/generate-image-analysis', {
+        const analysisResponse = await fetch('https://mybackend-eta.vercel.app/generate-image-analysis', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -701,7 +701,7 @@ function GrowPlantScreen({ navigation }) {
 
       const diaryEntryContent = `너는 사용자의 일기에 등장하는 ${plantData.type}이다. ${plantData.mbti} 성격을 가졌다. ${responseStyle} 사용자가 너에 대해 언급한 내용을 바탕으로, 마치 ${plantData.type}가 자신의 생각과 느낌을 사용자에게 직접 반말로 이야기하는 것처럼 표현해라. 사용자와의 일상적인 대화처럼 느껴지도록 해라. 사용자를 지칭할때는 ${nickname}으로 지칭하도록 해라. \n 사용자 일기: ${diaryText}`;
 
-      const replyResponse = await fetch('http://localhost:3001/generate-reply', {
+      const replyResponse = await fetch('https://mybackend-eta.vercel.app/generate-reply', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
