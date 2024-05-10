@@ -166,6 +166,7 @@ function GrowPlantScreen({ navigation }) {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ plantType, plantName, wateringCycle, startDate }),
+            mode: 'cors'
           });
 
           const mbtiData = await mbtiResponse.json();
@@ -678,6 +679,7 @@ function GrowPlantScreen({ navigation }) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ imageUrl: firstImageUrl }),
+          mode: 'cors'
         });
 
         if (analysisResponse.ok) {
@@ -707,6 +709,7 @@ function GrowPlantScreen({ navigation }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ diaryEntry: diaryEntryContent }),
+        mode: 'cors'
       });
 
       const replyData = await replyResponse.json();
