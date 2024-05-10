@@ -13,6 +13,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
+    "vercel-build": "npm run build-react",
     "build-react": "webpack --config ./web/webpack.config.js --mode production",
     "start-react": "webpack serve --config ./web/webpack.config.js --mode development"
   },
