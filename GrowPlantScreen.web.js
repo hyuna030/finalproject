@@ -166,7 +166,7 @@ function GrowPlantScreen({ navigation }) {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ plantType, plantName, wateringCycle, startDate }),
-            mode: 'cors'
+            mode: 'cors',
             credentials: 'include'
           });
 
@@ -680,7 +680,7 @@ function GrowPlantScreen({ navigation }) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ imageUrl: firstImageUrl }),
-          mode: 'cors'
+          mode: 'cors',
           credentials: 'include'
         });
 
@@ -711,7 +711,7 @@ function GrowPlantScreen({ navigation }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ diaryEntry: diaryEntryContent }),
-        mode: 'cors'
+        mode: 'cors',
         credentials: 'include'
       });
 
