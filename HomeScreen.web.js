@@ -399,7 +399,7 @@ function HomeScreen({ navigation }) {
                              case '당근':
                                imageName = plant.affection < 45 ? 'carrot1' : 'carrot2';
                                break;
-                               case '캣그라스':
+                               case '캣닢':
                                                       imageName = plant.affection < 45 ? 'catgrass1' : 'catgrass2';
                                                       break;
                              case '상추':
