@@ -162,7 +162,7 @@ function PlantPickScreen({ navigation }) {
     // result 값에 따라 selectedPlantImage 업데이트
       useEffect(() => {
         switch (result) {
-          case '캣그라스':
+          case '캣닢':
             setSelectedPlantImage('./image/catgrass_select.png');
             break;
           case '바질':
@@ -241,37 +241,37 @@ function PlantPickScreen({ navigation }) {
     // 답변을 문자열로 변환하여 결과를 찾음
     const resultMapping = {
       'aaaaa': '바질',
-      'aaaab': '캣그라스',
+      'aaaab': '캣닢',
       'aaaba': '상추',
-      'aaabb': '캣그라스',
+      'aaabb': '캣닢',
       'aabaa': '바질',
-      'aabab': '캣그라스',
+      'aabab': '캣닢',
       'aabba': '상추',
-      'aabbb': '캣그라스',
+      'aabbb': '캣닢',
       'abaaa': '당근',
-      'abaab': '캣그라스',
+      'abaab': '캣닢',
       'ababa': '당근',
-      'ababb': '캣그라스',
+      'ababb': '캣닢',
       'abbaa': '바질',
-      'abbab': '캣그라스',
+      'abbab': '캣닢',
       'abbba': '방울토마토',
-      'abbbb': '캣그라스',
+      'abbbb': '캣닢',
       'baaaa': '상추',
-      'baaab': '캣그라스',
+      'baaab': '캣닢',
       'baaba': '상추',
-      'baabb': '캣그라스',
+      'baabb': '캣닢',
       'babaa': '당근',
-      'babab': '캣그라스',
+      'babab': '캣닢',
       'babba': '당근',
-      'babbb': '캣그라스',
+      'babbb': '캣닢',
       'bbaaa': '상추',
-      'bbaab': '캣그라스',
+      'bbaab': '캣닢',
       'bbaba': '상추',
-      'bbabb': '캣그라스',
+      'bbabb': '캣닢',
       'bbbaa': '방울토마토',
-      'bbbab': '캣그라스',
+      'bbbab': '캣닢',
       'bbbba': '방울토마토',
-      'bbbbb': '캣그라스',
+      'bbbbb': '캣닢',
     };
     const resultKey = answers.join('');
     return resultMapping[resultKey] || '결과를 찾을 수 없음';

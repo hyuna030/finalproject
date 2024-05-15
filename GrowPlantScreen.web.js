@@ -210,7 +210,7 @@ function GrowPlantScreen({ navigation }) {
         // 식물 선택 후 처리
         const handlePlantSelect = (plantType) => {
           switch(plantType) {
-            case '캣그라스':
+            case '캣닢':
               setSelectedPlantImage('./image/catgrass_select.png');
               break;
             case '바질':
@@ -587,7 +587,7 @@ function GrowPlantScreen({ navigation }) {
                  case '당근':
                    imageName = plant.affection < 45 ? 'carrot1' : 'carrot2';
                    break;
-                 case '캣그라스':
+                 case '캣닢':
                    imageName = plant.affection < 45 ? 'catgrass1' : 'catgrass2';
                    break;
                  case '상추':
@@ -946,7 +946,7 @@ function GrowPlantScreen({ navigation }) {
               case '토마토':
                 selectedPlantImageUrl = selectedPlant.affection < 45 ? './image/tomato1.png' : './image/tomato2.png';
                 break;
-                case '캣그라스':
+                case '캣닢':
                                 selectedPlantImageUrl = selectedPlant.affection < 45 ? './image/catgrass1.png' : './image/catgrass2.png';
                                 break;
               case '기타식물':
@@ -1461,14 +1461,14 @@ function GrowPlantScreen({ navigation }) {
                                     </View>
                                     <View style={styles.plantSelectionContainer}>
                                     <View style={styles.plantImageContainer}>
-                                      <TouchableOpacity onPress={() => handlePlantSelect('캣그라스')}>
+                                      <TouchableOpacity onPress={() => handlePlantSelect('캣닢')}>
 
                                         <Image source={{ uri: './image/catgrass_select.png' }} style={styles.plantImage} />
                                         <TouchableOpacity
                                           onMouseEnter={(e) => handleMouseEnter(
                                             <>
                                             <View>
-                                              <Text style={styles.boldText}>캣그라스(귀리)</Text>
+                                              <Text style={styles.boldText}>캣닢</Text>
                                               <Text style={styles.normalText}>
                                                 고양이들이 좋아하는 식물로, 영양이 풍부하고 소화를 돕는 기능을 합니다. 키우기 쉽고 빠르게 자랍니다.
                                               </Text>
