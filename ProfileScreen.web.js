@@ -998,13 +998,7 @@ function ProfileScreen({ navigation }) {
                                                           <View style={styles.itemLine}></View>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => openModal('location')}>
-                                                          <View style={styles.itemList}>
-                                                            <Text style={styles.itemText}>위치관리</Text>
-                                                            <Image source={{ uri: './image/right_arrow.png' }} style={styles.arrowIcon} />
-                                                          </View>
-                                                          <View style={styles.itemLine}></View>
-                            </TouchableOpacity>
+
 
                             <TouchableOpacity onPress={() => openModal('delete')}>
                                                           <View style={styles.itemList}>
