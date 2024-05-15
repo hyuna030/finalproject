@@ -182,6 +182,8 @@ function GrowPlantScreen({ navigation }) {
             userId: user.uid,
             mbti: mbtiData.plantMBTI,
             affection: 1, // 호감도 점수 초기값 설정
+            wateringStatus: 'off', // 초기값으로 'off' 설정
+                  lastWatered: null // 초기값으로 null 설정
           });
 
           Alert.alert('성공', '새 식물이 추가되었습니다: ' + mbtiData.plantMBTI);
@@ -541,20 +543,20 @@ function GrowPlantScreen({ navigation }) {
          // 물주기 상태 토글 함수
            const toggleWatering = async (plant) => {
              const newStatus = plant.wateringStatus === 'on' ? 'off' : 'on';
-             const lastWatered = newStatus === 'on' ? new Date() : new Date(plant.lastWatered); // 항상 Date 객체를 사용
+             const lastWatered = newStatus === 'on' ? new Date() : null;
 
              // UI를 즉시 업데이트
              const updatedPlants = plants.map(p =>
                p.id === plant.id ? { ...p, wateringStatus: newStatus, lastWatered: lastWatered } : p
              );
-             setPlants(updatedPlants); // 식물 목록 상태 업데이트
+             setPlants(updatedPlants);
 
              // Firestore 업데이트 시도
              try {
                const plantRef = doc(firestore, "plants", plant.id);
                await updateDoc(plantRef, {
                  wateringStatus: newStatus,
-                 lastWatered: Timestamp.fromDate(lastWatered) // Firestore에 저장할 때 Timestamp로 변환
+                 lastWatered: lastWatered ? Timestamp.fromDate(lastWatered) : null
                });
              } catch (error) {
                console.error("Failed to update watering status: ", error);
@@ -563,6 +565,7 @@ function GrowPlantScreen({ navigation }) {
                setPlants(plants);
              }
            };
+
 
 
            useEffect(() => {
