@@ -537,10 +537,9 @@ function GrowPlantScreen({ navigation }) {
 
     // 식물 목록 표시 컴포넌트 (식물 이름과 키운 기간 계산)
          const PlantContainer = ({ plants, fetchPlants }) => {
+           const [diaryCounts, setDiaryCounts] = useState({});
 
-         const [diaryCounts, setDiaryCounts] = useState({});
-
-         // 물주기 상태 토글 함수
+           // 물주기 상태 토글 함수
            const toggleWatering = async (plant) => {
              const newStatus = plant.wateringStatus === 'on' ? 'off' : 'on';
              const lastWatered = newStatus === 'on' ? new Date() : null;
@@ -549,14 +548,14 @@ function GrowPlantScreen({ navigation }) {
              const updatedPlants = plants.map(p =>
                p.id === plant.id ? { ...p, wateringStatus: newStatus, lastWatered: lastWatered } : p
              );
-             setPlants(updatedPlants);
+             setPlants(updatedPlants); // 식물 목록 상태 업데이트
 
              // Firestore 업데이트 시도
              try {
                const plantRef = doc(firestore, "plants", plant.id);
                await updateDoc(plantRef, {
                  wateringStatus: newStatus,
-                 lastWatered: lastWatered ? Timestamp.fromDate(lastWatered) : null
+                 lastWatered: lastWatered ? Timestamp.fromDate(lastWatered) : null // Firestore에 저장할 때 Timestamp로 변환
                });
              } catch (error) {
                console.error("Failed to update watering status: ", error);
@@ -566,92 +565,67 @@ function GrowPlantScreen({ navigation }) {
              }
            };
 
-
-
-           useEffect(() => {
-             const interval = setInterval(() => {
-               plants.forEach(async (plant) => {
-                 if (plant.wateringStatus === 'on') {
-                   const lastWateredTime = plant.lastWatered.toDate().getTime();
-                   const currentTime = new Date().getTime();
-                   if (currentTime - lastWateredTime >= plant.wateringCycle * 86400000) {
-                     const plantRef = doc(firestore, "plants", plant.id);
-                     await updateDoc(plantRef, {
-                       wateringStatus: 'off'
-                     });
-                   }
-                 }
-               });
-             }, 60000); // 매 분마다 확인
-
-             return () => clearInterval(interval);
-           }, [plants]);
-
-
-
            return plants.map((plant, index) => {
              // 등록일로부터 현재까지의 일수 계산
              const startDate = moment(plant.startDate);
              const today = moment();
              const daysGrowing = today.diff(startDate, 'days') + 1; // 등록일 포함하여 계산
 
-
              // 호감도에 따라 식물 이미지 선택
-                 let plantImage;
-                 if (plant.affection < 10) {
-                   plantImage = {uri: `./image/flowerpot.png`};
-                 } else if (plant.affection < 25) {
-                   plantImage = {uri: `./image/sprout.png`};
-                 } else {
-                   // 식물의 종류에 따라 이미지 선택
-                   let imageName;
-                   switch (plant.type) {
-                   case '바질':
-                                          imageName = plant.affection < 45 ? 'basil1' : 'basil2';
-                                          break;
-                     case '당근':
-                       imageName = plant.affection < 45 ? 'carrot1' : 'carrot2';
-                       break;
-                       case '캣그라스':
-                                              imageName = plant.affection < 45 ? 'catgrass1' : 'catgrass2';
-                                              break;
-                     case '상추':
-                       imageName = plant.affection < 45 ? 'lettuce1' : 'lettuce2';
-                       break;
-                     case '토마토':
-                       imageName = plant.affection < 45 ? 'tomato1' : 'tomato2';
-                       break;
-                     case '기타식물':
-                       imageName = plant.affection < 45 ? 'extra1' : 'extra2';
-                       break;
-                     // 추가된 식물에 대한 경우도 추가
-                     default:
-                       // 기본 이미지 사용
-                       imageName = 'default';
-                   }
-                   plantImage = {uri: `./image/${imageName}.png`};
-                 }
+             let plantImage;
+             if (plant.affection < 10) {
+               plantImage = {uri: `./image/flowerpot.png`};
+             } else if (plant.affection < 25) {
+               plantImage = {uri: `./image/sprout.png`};
+             } else {
+               // 식물의 종류에 따라 이미지 선택
+               let imageName;
+               switch (plant.type) {
+                 case '바질':
+                   imageName = plant.affection < 45 ? 'basil1' : 'basil2';
+                   break;
+                 case '당근':
+                   imageName = plant.affection < 45 ? 'carrot1' : 'carrot2';
+                   break;
+                 case '캣그라스':
+                   imageName = plant.affection < 45 ? 'catgrass1' : 'catgrass2';
+                   break;
+                 case '상추':
+                   imageName = plant.affection < 45 ? 'lettuce1' : 'lettuce2';
+                   break;
+                 case '토마토':
+                   imageName = plant.affection < 45 ? 'tomato1' : 'tomato2';
+                   break;
+                 case '기타식물':
+                   imageName = plant.affection < 45 ? 'extra1' : 'extra2';
+                   break;
+                 // 추가된 식물에 대한 경우도 추가
+                 default:
+                   // 기본 이미지 사용
+                   imageName = 'default';
+               }
+               plantImage = {uri: `./image/${imageName}.png`};
+             }
 
              return (
                <TouchableOpacity key={index} onPress={() => onPlantContainerPress(plant)}>
-                         <View style={styles.card}>
-                                   <View style={styles.plantCardInner}>
-
-                                               <Image source={plantImage} style={[styles.cardlinkImage, { backgroundColor: '#F7F7F7'}]} />
-
-                                             <View style={styles.plantTextContainer}>
-                                             <TouchableOpacity onPress={() => toggleWatering(plant)}>
-                                                    <Image source={{ uri: `./image/${plant.wateringStatus === 'on' ? 'wateron' : 'wateroff'}.png` }} style={styles.waterButton} />
-                                             </TouchableOpacity>
-                                               <Text style={styles.plantName}>{plant.name}</Text>
-                                               <Text style={styles.plantDays}>{`키운지 ${daysGrowing}일`}</Text>
-                                             </View>
-                                           </View>
-                         </View>
-                       </TouchableOpacity>
+                 <View style={styles.card}>
+                   <View style={styles.plantCardInner}>
+                     <TouchableOpacity onPress={() => toggleWatering(plant)} style={styles.waterButton}>
+                       <Image source={{ uri: `./image/${plant.wateringStatus === 'on' ? 'wateron' : 'wateroff'}.png` }} style={styles.waterButtonImage} />
+                     </TouchableOpacity>
+                     <Image source={plantImage} style={[styles.cardlinkImage, { backgroundColor: '#F7F7F7'}]} />
+                     <View style={styles.plantTextContainer}>
+                       <Text style={styles.plantName}>{plant.name}</Text>
+                       <Text style={styles.plantDays}>{`키운지 ${daysGrowing}일`}</Text>
+                     </View>
+                   </View>
+                 </View>
+               </TouchableOpacity>
              );
            });
          };
+
 
 
 
@@ -2707,10 +2681,26 @@ const styles = StyleSheet.create({
                                   shadowRadius: 3.84,
                                   elevation: 5,
                                 },
-                                waterButton: {
-                                    width: 24,
-                                    height: 30,
-                                  },
+                                  waterButton: {
+                                      position: 'absolute',
+                                      top: 10,
+                                      right: 10,
+                                      width: 24,
+                                      height: 30,
+                                    },
+
+                                    waterButtonImage: {
+                                      width: '100%',
+                                      height: '100%',
+                                    },
+
+                                    plantCardInner: {
+                                      flexDirection: 'row', // 가로 방향으로 아이템을 배치
+                                      alignItems: 'center', // 세로 방향에서 중앙 정렬
+                                      justifyContent: 'center', // 가로 방향에서 중앙 정렬
+                                      flex: 1,
+                                      position: 'relative', // waterButton의 절대 위치를 위한 상대 위치 지정
+                                    },
 
 
 
