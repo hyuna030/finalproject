@@ -789,33 +789,33 @@ function GrowPlantScreen({ navigation }) {
         setShowCalendar(false); // 달력 모달 숨기기
       };
 
-      const handleDiarySubmit = () => {
-          // 날짜와 일기 내용이 모두 입력되었는지 검사
-          if (!diaryDate) {
-            setErrorMessage("날짜를 선택해주세요.");
-            return;
-          }
+      const handleDiarySubmit = async () => {
+        if (!diaryDate) {
+          setErrorMessage("날짜를 선택해주세요.");
+          return;
+        }
 
-          if (diaryText.trim() === "") {
-            setErrorMessage("일기를 작성해주세요.");
-            return;
-          }
+        if (diaryText.trim() === "") {
+          setErrorMessage("일기를 작성해주세요.");
+          return;
+        }
 
-          // 에러 메시지 초기화
-          setErrorMessage("");
+        setErrorMessage("");
 
-          setIsLoading(true);
+        // 로딩 상태 설정
+        setIsLoading(true);
 
-            try {
-              await saveDiaryEntry(diaryText, selectedPlant.id, user.uid, diaryDate, images, setImages);
-            } catch (error) {
-              console.error("Error saving diary entry:", error);
-              setErrorMessage("일기를 저장하는 동안 오류가 발생했습니다.");
-            } finally {
-              // 로딩 상태 해제
-              setIsLoading(false);
-            }
-        };
+        try {
+          await saveDiaryEntry(diaryText, selectedPlant.id, user.uid, diaryDate, images, setImages);
+        } catch (error) {
+          console.error("Error saving diary entry:", error);
+          setErrorMessage("일기를 저장하는 동안 오류가 발생했습니다.");
+        } finally {
+          // 로딩 상태 해제
+          setIsLoading(false);
+        }
+      };
+
 
 
       return (
