@@ -54,6 +54,9 @@ function GrowPlantScreen({ navigation }) {
 
     const [showMenuModal, setShowMenuModal] = useState(false); // 메뉴 모달 표시 상태
 
+    const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
+
+    const [isRegistering, setIsRegistering] = useState(false); // 로딩 상태 관리
 
 
   useEffect(() => {
@@ -158,6 +161,8 @@ function GrowPlantScreen({ navigation }) {
             return;
           }
 
+          setIsRegistering(true);
+
         try {
           // 서버로부터 식물 MBTI 가져오기
           const mbtiResponse = await fetch('https://finalpjbackend-01758c5118d1.herokuapp.com/generate-plant-mbti', {
@@ -194,6 +199,10 @@ function GrowPlantScreen({ navigation }) {
           console.error("식물 추가 중 에러 발생: ", error);
           Alert.alert('오류', '식물을 추가하는 동안 오류가 발생했습니다.');
         }
+        finally {
+            // 로딩 상태 해제
+            setIsRegistering(false);
+          }
       };
 
 
@@ -795,8 +804,17 @@ function GrowPlantScreen({ navigation }) {
           // 에러 메시지 초기화
           setErrorMessage("");
 
-          // 일기 및 AI 답변 저장 함수 호출
-          saveDiaryEntry(diaryText, selectedPlant.id, user.uid, diaryDate, images, setImages);
+          setIsLoading(true);
+
+            try {
+              await saveDiaryEntry(diaryText, selectedPlant.id, user.uid, diaryDate, images, setImages);
+            } catch (error) {
+              console.error("Error saving diary entry:", error);
+              setErrorMessage("일기를 저장하는 동안 오류가 발생했습니다.");
+            } finally {
+              // 로딩 상태 해제
+              setIsLoading(false);
+            }
         };
 
 
@@ -866,9 +884,14 @@ function GrowPlantScreen({ navigation }) {
                 )}
               </View>
 
-              <TouchableOpacity onPress={handleDiarySubmit} style={styles.diarySubmitButton}>
-                <Text style={styles.diarySubmitButtonText}>기록하기</Text>
+              <TouchableOpacity
+                onPress={handleDiarySubmit}
+                style={[styles.diarySubmitButton, isLoading && styles.diarySubmitButtonDisabled]}
+                disabled={isLoading}
+              >
+                <Text style={styles.diarySubmitButtonText}>{isLoading ? '저장 중...' : '기록하기'}</Text>
               </TouchableOpacity>
+
         </View>
       );
     };
@@ -1445,9 +1468,14 @@ function GrowPlantScreen({ navigation }) {
                                   {warningMessage ? (
                                                 <Text style={styles.warningText}>{warningMessage}</Text>
                                               ) : null}
-                                  <TouchableOpacity onPress={addPlant} style={styles.startButton}>
-                                    <Text style={styles.startButtonText}>시작하기</Text>
+                                  <TouchableOpacity
+                                    onPress={addPlant}
+                                    style={[styles.startButton, isRegistering && styles.startButtonDisabled]}
+                                    disabled={isRegistering}
+                                  >
+                                    <Text style={styles.startButtonText}>{isRegistering ? '등록 중...' : '시작하기'}</Text>
                                   </TouchableOpacity>
+
                                 </>
                               )}
                       {modalContent === 'plantSelect' && (
@@ -2701,6 +2729,13 @@ const styles = StyleSheet.create({
                                       flex: 1,
                                       position: 'relative', // waterButton의 절대 위치를 위한 상대 위치 지정
                                     },
+                                    startButtonDisabled: {
+                                      backgroundColor: '#cccccc', // 로딩 중일 때 회색 배경
+                                    },
+                                    diarySubmitButtonDisabled: {
+                                      backgroundColor: '#cccccc', // 로딩 중일 때 회색 배경
+                                    },
+
 
 
 
