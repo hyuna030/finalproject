@@ -2,8 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './HomeScreen.web';
-import LoginScreen from './LoginScreen.web'; // 파일 이름 변경
-import RegisterScreen from './RegisterScreen.web'; // 파일 이름 변경
+import LoginScreen from './LoginScreen.web';
+import RegisterScreen from './RegisterScreen.web';
 import ProfileScreen from './ProfileScreen.web';
 import Banner1Screen from './Banner1Screen.web';
 import Banner2Screen from './Banner2Screen.web';
@@ -119,9 +119,9 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home"
-      screenOptions={{
-                headerShown: false, // 화면 제목 숨기기
-              }}>
+        screenOptions={{
+          headerShown: false, // ?���? ?���? ?��기기
+        }}>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />

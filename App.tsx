@@ -15,14 +15,14 @@ function App() {
 
   useEffect(() => {
     const firebaseConfig = {
-              apiKey: "AIzaSyALWTQVjtTO2wUcZG3pFGfEbDrROME8100",
-              authDomain: "finalflowe.firebaseapp.com",
-              projectId: "finalflowe",
-              storageBucket: "finalflowe.appspot.com",
-              messagingSenderId: "187765610474",
-              appId: "1:187765610474:web:81708d38f90484df0cc493",
-              measurementId: "G-60DWLH469T"
-            };
+      apiKey: process.env.REACT_APP_API_KEY,
+      authDomain: "finalflowe.firebaseapp.com",
+      projectId: "finalflowe",
+      storageBucket: "finalflowe.appspot.com",
+      messagingSenderId: "187765610474",
+      appId: "1:187765610474:web:81708d38f90484df0cc493",
+      measurementId: "G-60DWLH469T"
+    };
 
 
     initializeApp(firebaseConfig);
@@ -41,7 +41,7 @@ function App() {
       <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{
-          headerShown: false, // í™”ë©´ ì œëª© ìˆ¨ê¸°ê¸°
+          headerShown: false, // ?™”ë©? ? œëª? ?ˆ¨ê¸°ê¸°
         }}
       >
         <Stack.Screen name="Home">

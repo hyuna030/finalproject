@@ -8,7 +8,7 @@ import { getStorage } from 'firebase/storage';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyALWTQVjtTO2wUcZG3pFGfEbDrROME8100",
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: "finalflowe.firebaseapp.com",
   projectId: "finalflowe",
   storageBucket: "finalflowe.appspot.com",
@@ -17,9 +17,8 @@ const firebaseConfig = {
   measurementId: "G-60DWLH469T"
 };
 
-// Firebase 초기화
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);  // 수정: getAuth 함수 사용
+const auth = getAuth(app);
 const firestore = getFirestore(app);
 const storage = getStorage(app);
 
