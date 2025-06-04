@@ -1,8 +1,18 @@
 const path = require('path');
 const webpack = require('webpack');
+const dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const appDirectory = path.resolve(__dirname, '../');
+
+// .env ÆÄÀÏ ·Îµå
+const env = dotenv.config().parsed || {};
+
+// È¯°æº¯¼ö °¡°ø
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
 
 const babelLoaderConfiguration = {
   test: /\.(t|j)sx?$/,
@@ -13,20 +23,19 @@ const babelLoaderConfiguration = {
       cacheDirectory: true,
       presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
       plugins: [
-          '@babel/plugin-proposal-class-properties',
-          '@babel/plugin-proposal-object-rest-spread',
-        ],
+        '@babel/plugin-proposal-class-properties',
+        '@babel/plugin-proposal-object-rest-spread',
+      ],
     },
   },
 };
 
-// ì´ë¯¸ì§€ íŒŒì¼ì„ ì²˜ë¦¬í•˜ê¸° ìœ„í•œ ë¡œë” êµ¬ì„±
 const imageLoaderConfiguration = {
   test: /\.(png|jpe?g|gif|svg)$/,
   use: {
     loader: 'file-loader',
     options: {
-      name: 'image/[name].[ext]', // ì´ë¯¸ì§€ê°€ ì €ì¥ë  ê²½ë¡œ ë° íŒŒì¼ëª… í˜•ì‹
+      name: 'image/[name].[ext]',
     },
   },
 };
@@ -39,29 +48,40 @@ module.exports = {
     filename: 'bundle.web.js',
     path: path.resolve(appDirectory, 'dist'),
     publicPath: '/',
-},
-externals: {
-    'react-native-webview': 'commonjs react-native-webview'
   },
 
-module: {
-rules: [
-babelLoaderConfiguration,
-imageLoaderConfiguration, // ì´ë¯¸ì§€ ë¡œë”ë¥¼ ì¶”ê°€
-// ì—¬ê¸°ì— ë‹¤ë¥¸ ë¡œë” êµ¬ì„±ì„ ì¶”ê°€í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
-],
-},
+  // ?? Webview´Â À¥¿¡¼­ ¾µ ¼ö ¾ø±â ¶§¹®¿¡ ¾Æ·¡ ÁÙÀº »èÁ¦ÇÏ°Å³ª ÁÖ¼® Ã³¸®ÇÏ¼¼¿ä
+  // externals: {
+  //   'react-native-webview': 'commonjs react-native-webview'
+  // },
 
-plugins: [
-new HtmlWebpackPlugin({
-template: './public/index.html',
-}),
-],
+  module: {
+    rules: [
+      babelLoaderConfiguration,
+      imageLoaderConfiguration,
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      }
+    ],
+  },
 
-resolve: {
-extensions: ['.web.js', '.js', '.tsx', '.ts', '.json'],
-alias: {
-'react-native$': 'react-native-web',
-},
-},
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+    }),
+    new webpack.DefinePlugin(envKeys), // ? È¯°æº¯¼ö ÁÖÀÔ
+  ],
+
+  resolve: {
+    extensions: ['.web.js', '.js', '.tsx', '.ts', '.json'],
+    alias: {
+      'react-native$': 'react-native-web',
+    },
+  },
+
+  devServer: {
+    static: path.resolve(appDirectory, 'dist'),
+    hot: true,
+  },
 };
