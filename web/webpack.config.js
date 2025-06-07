@@ -82,7 +82,7 @@ module.exports = {
 
   // 그리고 resolve 부분에 추가
   resolve: {
-    extensions: ['.web.js', '.js', '.tsx', '.ts', '.json'],
+    extensions: ['.web.js', '.web.tsx', '.web.ts', '.js', '.tsx', '.ts', '.json'], // .web.js를 맨 앞으로
     alias: {
       'react-native$': 'react-native-web',
     },
