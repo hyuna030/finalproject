@@ -50,11 +50,6 @@ module.exports = {
     publicPath: '/',
   },
 
-  // ?? Webview는 웹에서 쓸 수 없기 때문에 아래 줄은 삭제하거나 주석 처리하세요
-  // externals: {
-  //   'react-native-webview': 'commonjs react-native-webview'
-  // },
-
   module: {
     rules: [
       babelLoaderConfiguration,
@@ -71,6 +66,10 @@ module.exports = {
       template: './public/index.html',
     }),
     new webpack.DefinePlugin(envKeys), // ? 환경변수 주입
+    // process 폴리필 추가
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    })
   ],
 
   resolve: {
@@ -78,6 +77,23 @@ module.exports = {
     alias: {
       'react-native$': 'react-native-web',
     },
+    // Node.js 폴리필 fallback 추가
+    fallback: {
+      "process": require.resolve("process/browser"),
+      "buffer": require.resolve("buffer"),
+      "util": require.resolve("util"),
+      "url": require.resolve("url"),
+      "assert": require.resolve("assert"),
+      "crypto": require.resolve("crypto-browserify"),
+      "stream": require.resolve("stream-browserify"),
+      "http": require.resolve("stream-http"),
+      "https": require.resolve("https-browserify"),
+      "os": require.resolve("os-browserify/browser"),
+      "path": require.resolve("path-browserify"),
+      "fs": false,
+      "net": false,
+      "tls": false
+    }
   },
 
   devServer: {
