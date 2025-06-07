@@ -17,8 +17,6 @@ const envKeys = Object.keys(env).reduce((prev, next) => {
   prev[`process.env.${next}`] = JSON.stringify(env[next]);
   return prev;
 }, {
-  // 기본값 추가
-  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
 });
 
 // 디버깅용
