@@ -1,0 +1,15 @@
+[build]
+  # 빌드 명령어 (package.json의 build 스크립트 실행)
+  command = "npm run build-react"
+  
+  # 빌드 결과물이 있는 폴더 (webpack 설정에서 dist로 설정했으므로)
+  publish = "dist"
+  
+  # Node.js 버전 지정 (선택사항)
+  # NODE_VERSION = "18"
+
+# 리다이렉트 설정 (SPA를 위한 설정)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
