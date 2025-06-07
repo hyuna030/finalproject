@@ -47,7 +47,7 @@ module.exports = {
   output: {
     filename: 'bundle.web.js',
     path: path.resolve(appDirectory, 'dist'),
-    publicPath: '/',
+    publicPath: './',
   },
 
   // ?? Webview는 웹에서 쓸 수 없기 때문에 아래 줄은 삭제하거나 주석 처리하세요
