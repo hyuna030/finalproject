@@ -72,7 +72,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       ...envKeys,
-      'process.env.NODE_ENV': JSON.stringify('production'),
+
     }),
     // 이 부분 추가
     new webpack.ProvidePlugin({
