@@ -4,9 +4,8 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
-// 임시 하드코딩 테스트
 const firebaseConfig = {
-  apiKey: "AIzaSyALWTQVjtTO2wUcZG3pFGfEbDrROME8100",
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: "finalflowe.firebaseapp.com",
   projectId: "finalflowe",
   storageBucket: "finalflowe.appspot.com",
