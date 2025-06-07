@@ -1,6 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.web' // .web.js 파일을 명시적으로 import
+import ReactDOM from 'react-dom'
+import App from './App'
 
-const root = ReactDOM.createRoot(document.getElementById('app'))
-root.render(<App />)
+ReactDOM.render(<App />, document.getElementById('app'))

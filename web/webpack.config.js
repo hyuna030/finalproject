@@ -45,7 +45,7 @@ module.exports = {
     path.resolve(appDirectory, 'index.web.js')
   ],
   output: {
-    filename: 'bundle.[contenthash].js',
+    filename: 'bundle.web.js',
     path: path.resolve(appDirectory, 'dist'),
     publicPath: '/',
   },
@@ -70,25 +70,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    new webpack.DefinePlugin({
-      ...envKeys,
-
-    }),
-    // 이 부분 추가
-    new webpack.ProvidePlugin({
-      process: 'process/browser',
-    }),
+    new webpack.DefinePlugin(envKeys), // ? 환경변수 주입
   ],
 
-  // 그리고 resolve 부분에 추가
   resolve: {
-    extensions: ['.web.js', '.web.tsx', '.web.ts', '.js', '.tsx', '.ts', '.json'], // .web.js를 맨 앞으로
+    extensions: ['.web.js', '.js', '.tsx', '.ts', '.json'],
     alias: {
       'react-native$': 'react-native-web',
     },
-    fallback: {
-      "process": require.resolve("process/browser")
-    }
   },
 
   devServer: {
