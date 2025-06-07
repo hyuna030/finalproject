@@ -6,7 +6,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const appDirectory = path.resolve(__dirname, '../');
 
 // .env 파일 로드
-const env = dotenv.config().parsed || {};
+const env = dotenv.config({
+  path: path.resolve(__dirname, '../.env')
+}).parsed || {};
+
 
 // 환경변수 가공
 const envKeys = Object.keys(env).reduce((prev, next) => {
