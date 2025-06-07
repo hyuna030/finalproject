@@ -70,14 +70,25 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    new webpack.DefinePlugin(envKeys), // ? 환경변수 주입
+    new webpack.DefinePlugin({
+      ...envKeys,
+      'process.env.NODE_ENV': JSON.stringify('production'),
+    }),
+    // 이 부분 추가
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
   ],
 
+  // 그리고 resolve 부분에 추가
   resolve: {
     extensions: ['.web.js', '.js', '.tsx', '.ts', '.json'],
     alias: {
       'react-native$': 'react-native-web',
     },
+    fallback: {
+      "process": require.resolve("process/browser")
+    }
   },
 
   devServer: {
