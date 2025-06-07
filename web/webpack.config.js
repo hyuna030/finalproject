@@ -6,16 +6,23 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const appDirectory = path.resolve(__dirname, '../');
 
 // .env 파일 로드
-const env = dotenv.config({
-  path: path.resolve(__dirname, '../.env')
-}).parsed || {};
+const env = dotenv.config({ path: path.resolve(__dirname, '../.env') }).parsed || {};
 
+// 디버깅용 - 빌드할 때 터미널에서 확인
+console.log('ENV file path:', path.resolve(__dirname, '../.env'));
+console.log('Loaded env:', env);
 
-// 환경변수 가공
+// 환경변수 가공 부분을 다음과 같이 변경
 const envKeys = Object.keys(env).reduce((prev, next) => {
   prev[`process.env.${next}`] = JSON.stringify(env[next]);
   return prev;
-}, {});
+}, {
+  // 기본값 추가
+  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
+});
+
+// 디버깅용
+console.log('Processed envKeys for webpack:', envKeys);
 
 const babelLoaderConfiguration = {
   test: /\.(t|j)sx?$/,
